@@ -12,6 +12,7 @@ query GetReviews {
          body
          rating
          createdAt
+         slug
          categories {
           data {
             attributes {
@@ -50,7 +51,7 @@ const Home = () => {
               }
             
               <p>{review.attributes.body.substring(0,200)}</p>
-              <Link to={`/reviews/${review.id}`} >
+            <Link to={`/reviews/${review.attributes.slug}`} >
                 Read more
               </Link>
             </div>

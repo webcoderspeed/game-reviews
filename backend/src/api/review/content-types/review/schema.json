@@ -33,6 +33,11 @@
       "relation": "manyToMany",
       "target": "api::category.category",
       "inversedBy": "reviews"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
     }
   }
 }

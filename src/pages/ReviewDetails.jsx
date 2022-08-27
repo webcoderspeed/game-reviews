@@ -4,14 +4,21 @@ import { useQuery, gql } from '@apollo/client';
 import ReactMarkdown from 'react-markdown'
 
 const GET_REVIEW = gql`
-query GetReview($id: ID!) {
-  review(id: $id) {
+query GetReview($slug: String!) {
+  reviews(
+	filters: {
+    slug: {
+      eq: $slug
+    }
+  }
+  ) {
     data {
       id
       attributes {
          title
-         body
+        slug
          rating
+         body
          createdAt
          categories {
           data {
@@ -27,9 +34,9 @@ query GetReview($id: ID!) {
 `;
 
 const ReviewDetails = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
 
-  const { loading, error, data } = useQuery(GET_REVIEW, { variables: { id } });
+  const { loading, error, data } = useQuery(GET_REVIEW, { variables: { slug } });
 
   if (loading) return <>Loading...</>;
 
@@ -37,15 +44,15 @@ const ReviewDetails = () => {
 
   return (
     <div className='review-card'>
-      <div className='rating'>{data.review.data.attributes.rating}</div>
-      <h2>{data.review.data.attributes.title}</h2>
+      <div className='rating'>{data.reviews.data[0].attributes.rating}</div>
+      <h2>{data.reviews.data[0].attributes.title}</h2>
       {
-        data.review.data.attributes.categories.data.map(category => <small key={category.id}>{category.attributes.name}</small>
+        data.reviews.data[0].attributes.categories.data.map(category => <small key={category.id}>{category.attributes.name}</small>
         )
       }
 
 
-      <ReactMarkdown>{data.review.data.attributes.body}</ReactMarkdown>
+      <p>{data.reviews.data[0].attributes.body}</p>
     </div>
   );
 };

@@ -14,6 +14,7 @@ const GET_CATEGORY = gql`
                 title
                 body
                 rating
+                slug
                 categories {
                   data {
                     id
@@ -53,7 +54,7 @@ const ReviewDetails = () => {
             <small key={category.id}>{category.attributes.name}</small>
           ))}
           <p>{review.attributes.body.substring(0, 200)}</p>
-          <Link to={`/reviews/${review.id}`}>Read more</Link>
+          <Link to={`/reviews/${review.attributes.slug}`}>Read more</Link>
         </div>
       ))}
     </div>
