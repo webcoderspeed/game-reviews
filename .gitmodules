@@ -1,0 +1,3 @@
+[submodule "game-reviews/game-reviews"]
+	path = game-reviews/game-reviews
+	url = git@webcoderspeed:webcoderspeed/game-reviews.git
